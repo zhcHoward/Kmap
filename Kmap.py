@@ -103,4 +103,5 @@ def simplify(minterms, not_care=[]):
 if __name__ == '__main__':
     minterms = [
         '0110', '1000', '1001', '1010', '1011', '1100', '1101', '1110']
-    simplify(minterms)
+    not_care = []
+    simplify(minterms, not_care)
