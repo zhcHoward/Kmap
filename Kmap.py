@@ -8,12 +8,12 @@ from copy import deepcopy
 """ Minterms stores expressions for 1s and "don't care". """
 
 
-def simplify(minterms):
+def simplify(minterms, not_care=[]):
     # minterms_tmp: store minterms of current loop
     # source_tmp: store each minterms is from which 2 minterm
     # flag: store whether the corresponding minterm has been used to generate a new term
     # no_new_term: check whether there is a new term generated in current loop
-    minterms_tmp = minterms
+    minterms_tmp = not_care + minterms
     source_tmp = [[i] for i in range(len(minterms_tmp))]
     flag = [False for i in range(len(minterms_tmp))]
     no_new_term = False
@@ -53,7 +53,7 @@ def simplify(minterms):
 
         # add the terms that can't be simplified to new terms for next loop
         for i in range(len(minterms_tmp)):
-            if flag[i] == False:
+            if not flag[i]:
                 minterms_new.append(minterms_tmp[i])
                 source_new.append(source_tmp[i])
 
@@ -77,10 +77,8 @@ def simplify(minterms):
     source_new = deepcopy(source_tmp)
 
     # remove source that appears in other terms' source list
-    i = 0
-    while i < len(minterms_tmp):
-        j = 0
-        while j < len(minterms_tmp):
+    for i in range(len(minterms_tmp)):
+        for j in range(len(minterms_tmp)):
             if i != j:
                 k = 0
                 while k < len(source_new[i]):
@@ -88,14 +86,16 @@ def simplify(minterms):
                         source_new[i].pop(k)
                         k -= 1
                     k += 1
-            j += 1
-        i += 1
 
     # remove terms that its source list is empty
     i = 0
     while i < len(minterms_tmp):
-        if len(source_new[i]) == 0:
+        case1 = (len(source_new[i]) == 0)   # a term's source is empty
+        case2 = set(source_new[i]).issubset(set(range(len(not_care)))) # a term's source only contains "don't care"
+        if a or b:
             minterms_tmp.pop(i)
+            source_new.pop(i)
+            i -= 1
         i += 1
 
     print(minterms_tmp)
