@@ -46,3 +46,4 @@ pip-log.txt
 #############
 .idea/
 KarnaughMap.py
+*tmp*
