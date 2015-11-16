@@ -14,6 +14,7 @@ This function can be divided into 2 parts:
 1. Simplify all the terms untill no more terms can be simpified, the output of the example below in this step is: `['10**', '1*0*', '1**0', '*110']` which is same as `AB' + AC' + AD' + BCD'`
 2. In the 2nd step, the `source` of all terms will be checked.
 If a term's source don't have at least 1 unique source or the unique term(s) is the term of "don't care, it means this term is unnecessary and this term will be removed. Then, you will get the final result.
+
 # Example
 On the wiki page(linked above), you can find a truth table which can be represented as:
 
