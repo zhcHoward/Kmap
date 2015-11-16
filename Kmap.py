@@ -90,9 +90,11 @@ def simplify(minterms, not_care=[]):
     # remove terms that its source list is empty
     i = 0
     while i < len(minterms_tmp):
-        case1 = (len(source_new[i]) == 0)   # a term's source is empty
-        case2 = set(source_new[i]).issubset(set(range(len(not_care)))) # a term's source only contains "don't care"
-        if a or b:
+        # a term's source is empty
+        case1 = (len(source_new[i]) == 0)
+        # a term's source only contains "don't care"
+        case2 = set(source_new[i]).issubset(set(range(len(not_care))))
+        if case1 or case2:
             minterms_tmp.pop(i)
             source_new.pop(i)
             i -= 1
