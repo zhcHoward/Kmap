@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 This script defines a function to simplify boolean algebra expressions,
 inspired by Karnaugh Map.
@@ -6,6 +7,21 @@ inspired by Karnaugh Map.
 from copy import deepcopy
 
 """ Minterms stores expressions for 1s and "don't care". """
+
+
+def diff_terms(term1, term2):
+    if len(term1) == len(term2):
+        diff = 0
+        pos = -1
+        for i in range(len(term1):
+            if diff < 2:
+                if term1[i] != term2[i]:
+                    diff += 1
+                    pos = i
+            else:
+                break
+        if diff == 1:
+            return '*'.join((term1[:pos], term2[pos+1:]))
 
 
 def simplify(minterms, not_care=[]):
@@ -39,7 +55,7 @@ def simplify(minterms, not_care=[]):
                     else:
                         # if dif >= 2, then these two term can't be simplified
                         # so jump out of the loop
-                        break
+                    break
                 if dif == 1:
                     # change the charater which is different into '*'
                     # the rest remains
