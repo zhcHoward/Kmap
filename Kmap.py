@@ -9,19 +9,42 @@ from copy import deepcopy
 """ Minterms stores expressions for 1s and "don't care". """
 
 
+class Term():
+    def __init__(self, term=[], source=[], flag=False):
+        self.term = term
+        self.source = source
+        self.flag = flag
+        self.length = len(term)
+
+
+class Minterms():
+    def __init__(self, minterms=[], maxterms=[], not_cares=[]):
+        self.minterms = minterms
+        self.maxterms = maxterms
+        self.not_cares = not_cares
+
+
 def diff_terms(term1, term2):
-    if len(term1) == len(term2):
+    if term1.length == term2.length:
         diff = 0
         pos = -1
-        for i in range(len(term1):
+
+        for i in range(term1.length):
             if diff < 2:
-                if term1[i] != term2[i]:
+                if term1.term[i] != term2.term[i]:
                     diff += 1
                     pos = i
             else:
                 break
+
         if diff == 1:
-            return '*'.join((term1[:pos], term2[pos+1:]))
+            new_term = '*'.join((term1.term[:pos], term2.term[pos+1:]))
+            new_source = []
+            new_source.extend(term1.source + term2.source)
+            term1.flag = True
+            term2.flag = True
+
+            return Term(new_term, new_source)
 
 
 def simplify(minterms, not_care=[]):
