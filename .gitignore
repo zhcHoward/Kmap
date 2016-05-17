@@ -33,6 +33,7 @@ var/
 sdist/
 develop-eggs/
 .installed.cfg
+.vscode/
 
 # Installer logs
 pip-log.txt
