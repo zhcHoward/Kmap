@@ -29,13 +29,13 @@ def diff_terms(term1, term2):
         diff = 0
         pos = -1
 
-        for i in range(term1.length):
-            if diff < 2:
-                if term1.term[i] != term2.term[i]:
-                    diff += 1
-                    pos = i
-            else:
+        for idx, (t1, t2) in enumerate(zip(term1.term, term2.term)):
+            if diff > 2:
                 break
+            else:
+                if t1 != t2:
+                    diff += 1
+                    pos = idx
 
         if diff == 1:
             new_term = '*'.join((term1.term[:pos], term2.term[pos + 1:]))

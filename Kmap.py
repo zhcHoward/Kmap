@@ -63,9 +63,9 @@ class Minterms():
 
     def simplify(self):
         minterms_old = self.not_cares + self.minterms
-        for i in range(len(minterms_old)):
-            minterms_old[i].source = [i]
         no_new_term = False
+        for idx, term in enumerate(minterms_old):
+            term.source = [idx]
 
         # loop until no terms can be simplified
         while not no_new_term:
