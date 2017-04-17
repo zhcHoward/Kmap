@@ -3,7 +3,9 @@
 
 
 class Term():
-    def __init__(self, term='', source=[], flag=False):
+    def __init__(self, term='', source=None, flag=False):
+        if source is None:
+            source = []
         self.term = term
         self.source = source
         self.flag = flag
