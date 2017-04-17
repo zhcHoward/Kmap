@@ -15,7 +15,13 @@ from utils import (
 class Minterms():
     """ Minterms stores expressions for 1s and "don't care". """
 
-    def __init__(self, minterms=[], maxterms=[], not_cares=[], nov=0):
+    def __init__(self, minterms=None, maxterms=None, not_cares=None, nov=0):
+        if minterms is None:
+            minterms = []
+        if maxterms is None:
+            maxterms = []
+        if not_cares is None:
+            not_cares = []
         if not minterms and not maxterms:
             raise ValueError('Both of minterms and maxterms cannot be empty at the same time')
         elif not minterms:
