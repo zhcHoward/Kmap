@@ -1,4 +1,4 @@
-# Kmap
+# Kmap [![Build Status](https://travis-ci.org/zhcHoward/Kmap.svg?branch=master)](https://travis-ci.org/zhcHoward/Kmap)
 A simple function to simplify boolean algebra expressions, inspired by [Karnaugh Map(wikipedia)](https://en.wikipedia.org/wiki/Karnaugh_map).
 # Introduction
 Basically, this Kmap.py file contains a function which can simplify boolean algebra expressions according to the truth table. But to input the full truth table is unecessary and may be troublesome espacially when there are too many expressions. So the function simplify takes only minterms and "don't care" as input.
