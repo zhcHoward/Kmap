@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import itertools
+
 
 class Term():
     def __init__(self, term='', source=None, flag=False):
@@ -57,15 +59,14 @@ def get_not_simplified_terms(terms):
 
 # remove source that appears in other terms' source list
 def remove_repeated_sources(terms, standard_terms):
-    for term1 in standard_terms:
-        for term2 in terms:
-            if term1 != term2:
-                i = 0
-                while i < len(term2.source):
-                    if term2.source[i] in term1.source:
-                        term2.source.pop(i)
-                        i -= 1
-                    i += 1
+    for term1, term2 in itertools.product(standard_terms, terms):
+        if term1 != term2:
+            i = 0
+            while i < len(term2.source):
+                if term2.source[i] in term1.source:
+                    term2.source.pop(i)
+                    i -= 1
+                i += 1
     return terms
 
 

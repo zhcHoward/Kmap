@@ -4,6 +4,7 @@
 This script defines a function to simplify boolean algebra expressions,
 inspired by Karnaugh Map.
 """
+import itertools
 from copy import deepcopy
 
 from utils import (
@@ -27,18 +28,18 @@ class Minterms():
         elif not minterms:
             self.maxterms = maxterms
             self.not_cares = not_cares
-            self.number_of_variables = self.maxterms[0].length
-            self.minterms = self._generate_minterms()
+            self.number_of_variables = nov if nov else self.maxterms[0].length
+            self._generate_minterms()
         elif not maxterms:
             self.minterms = minterms
             self.not_cares = not_cares
-            self.number_of_variables = self.minterms[0].length
-            self.maxterms = self._generate_maxterms()
+            self.number_of_variables = nov if nov else self.minterms[0].length
+            self._generate_maxterms()
         else:
             self.minterms = minterms
             self.maxterms = maxterms
             self.not_cares = not_cares
-            self.number_of_variables = self.maxterms[0].length
+            self.number_of_variables = nov if nov else self.maxterms[0].length
         self.result = None  # result won't be calculated during initialization
 
     def _generate_minterms(self):
@@ -74,12 +75,11 @@ class Minterms():
 
             # look into terms two by two,
             # and simplify them if they can be simplified
-            for i in range(len(minterms_old)):
-                for j in range(i + 1, len(minterms_old)):
-                    term = diff_terms(minterms_old[i], minterms_old[j])
-                    if term:
-                        minterms_new.append(term)
-                        no_new_term = False
+            for term1, term2 in itertools.combinations(minterms_old, 2):
+                term = diff_terms(term1, term2)
+                if term:
+                    minterms_new.append(term)
+                    no_new_term = False
 
             # add the terms that can't be simplified to new terms for next loop
             minterms_new.extend(get_not_simplified_terms(minterms_old))
