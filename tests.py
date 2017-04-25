@@ -13,7 +13,7 @@ def test_result():
     minterms = Minterms(t_minterms)
     minterms.simplify()
 
-    assert set([m.term for m in minterms.result]) == {'10**', '1*0*', '*110'}
+    assert {m.term for m in minterms.result} == {'10**', '1*0*', '*110'}
 
 
 if __name__ == "__main__":
