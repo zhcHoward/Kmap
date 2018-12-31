@@ -8,12 +8,15 @@ import itertools
 from copy import deepcopy
 
 from utils import (
-    Term, diff_terms, get_not_simplified_terms, remove_repeated_sources,
+    Term,
+    diff_terms,
+    get_not_simplified_terms,
+    remove_repeated_sources,
     remove_redundant_terms,
 )
 
 
-class Minterms():
+class Minterms(object):
     """ Minterms stores expressions for 1s and "don't care". """
 
     def __init__(self, minterms=None, maxterms=None, not_cares=None, nov=0):
@@ -24,7 +27,9 @@ class Minterms():
         if not_cares is None:
             not_cares = []
         if not minterms and not maxterms:
-            raise ValueError('Both of minterms and maxterms cannot be empty at the same time')
+            raise ValueError(
+                "Both of minterms and maxterms cannot be empty at the same time"
+            )
         elif not minterms:
             self.maxterms = maxterms
             self.not_cares = not_cares
@@ -45,8 +50,8 @@ class Minterms():
     def _generate_minterms(self):
         nov = self.number_of_variables
         minterms = []
-        for i in range(2**(nov - 1)):
-            term = Term('{1:0{0}b}'.format(nov, i))
+        for i in range(2 ** (nov - 1)):
+            term = Term("{1:0{0}b}".format(nov, i))
             if term not in self.maxterms:
                 minterms.append(term)
 
@@ -55,8 +60,8 @@ class Minterms():
     def _generate_maxterms(self):
         nov = self.number_of_variables
         maxterms = []
-        for i in range(2**(nov - 1)):
-            term = Term('{1:0{0}b}'.format(nov, i))
+        for i in range(2 ** (nov - 1)):
+            term = Term("{1:0{0}b}".format(nov, i))
             if term not in self.minterms:
                 maxterms.append(term)
 
@@ -96,12 +101,12 @@ class Minterms():
         self.result = remove_redundant_terms(minterms, self.not_cares)
 
 
-if __name__ == '__main__':
-    str_terms = [
-        '0110', '1000', '1001', '1010', '1011', '1100', '1101', '1110']
-    t_minterms = []
-    for term in str_terms:
-        t_minterms.append(Term(term))
-    minterms = Minterms(t_minterms)
+if __name__ == "__main__":
+    str_terms = ["0010", "0000", "0110", "1000"]
+    terms_not_care = ["1010", "1011", "1100", "1101", "1110", "1111"]
+    t_minterms = [Term(term) for term in str_terms]
+    not_cares = [Term(term) for term in terms_not_care]
+
+    minterms = Minterms(t_minterms, not_cares=not_cares)
     minterms.simplify()
     print(minterms.result)
